@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+ 
+{% block content %}
+  <div class="post-entry">
+    <p>{{ event.pk }}</p>
+    <h2>{{ event.EventName }}</h2>
+    <p>{{ event.PublicationDate }}</p>
+    <p>{{ event.EventDate }}</p>
+  </div>
+ 
+{% endblock content %}

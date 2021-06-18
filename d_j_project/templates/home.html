@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+ 
+
+{% block content %}
+
+  {% if user.is_authenticated %}
+    <p>Hi {{ user.username }}!</p>
+    <p><a href="{% url 'logout' %}">Log out</a></p>
+  {% else %}
+    <p>You are not logged in.</p>
+    <a href="{% url 'login' %}">Log In</a>
+  {% endif %}
+
+
+  {% for event in object_list %}
+    <div class="post-entry">
+      <h2><a href="{% url 'event_detail' event.pk %}">{{ event.EventName }}</a></h2>
+      <p>{{ event.PublicationDate }}</p>
+      <p>{{ event.EventDate }}</p>
+      <b><a  href="{% url 'event_detail'  event.pk  %}">details</a></b>
+      <b><a  href="{% url 'event_update'  event.pk  %}">edit</a></b>
+      <b><a  href="{% url 'event_delete'  event.pk  %}">delete</a></b>
+      <hr>
+    </div>
+  {% endfor %}
+  <a href="{% url 'event_create'%}">Create new event</a>
+{% endblock content %}
