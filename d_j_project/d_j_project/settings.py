@@ -18,6 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
+    'social_django',
     'accounts',
     'app'
 ]
@@ -51,6 +53,14 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'd_j_project.wsgi.application'
+
+
+
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 
 
 
@@ -100,3 +110,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+SOCIAL_AUTH_POSTGRES_JSONFIELD = True
