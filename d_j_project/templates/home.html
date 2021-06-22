@@ -5,6 +5,7 @@
 
   {% if user.is_authenticated %}
     <p>Hi {{ user.username }}!</p>
+    <p>Your group is {{ user.groups.all }}</p>
     <p><a href="{% url 'logout' %}">Log out</a></p>
   {% else %}
     <p>You are not logged in.</p>

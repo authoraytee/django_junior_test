@@ -7,4 +7,13 @@
   {{ form.as_p }}
   <button type="submit">Log In</button>
 </form>
+
+{% if user.is_authenticated %}
+<p>Hi {{ user.username }}!</p>
+<p>Your group is {{ user.groups.all }}</p>
+<p><a href="{% url 'logout' %}">Log out</a></p>
+{% else %}
+<p>You are not logged in.</p>
+<a href="{% url 'login' %}">Log In</a>
+{% endif %}
 {% endblock content %}
