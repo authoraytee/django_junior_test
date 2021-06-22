@@ -3,27 +3,21 @@
 
 {% block content %}
 
-  {% if user.is_authenticated %}
-    <p>Hi <a href="{% url 'user_profile' %}">{{ user.username }}</a>!</p>
-    <p><a href="{% url 'logout' %}">Log out</a></p>
-  {% else %}
-    <p>You are not logged in.</p>
-    <a href="{% url 'login' %}">Log In</a>
-  {% endif %}
-
-  <a href="{% url 'event_create'%}">Create new event</a>
+  <a class="new_event_link" href="{% url 'event_create'%}">Create new event</a>
 
   {% for event in object_list %}
     <div class="post-entry">
-      <h2>{{ event.id }} <a href="{% url 'event_detail' event.pk %}">{{ event.EventName }}</a></h2>
-      <p>{{ event.PublicationDate }}</p>
-      <p>{{ event.EventDate }}</p>
+      <h3 class="event_name"><a href="{% url 'event_detail' event.pk %}">{{ event.EventName }}</a></h3>
+      <span class="id">ID: {{ event.id }}</span>
+      <p>Publication Date: {{ event.PublicationDate }}</p>
+      <p>Event Date: {{ event.EventDate }}</p>
       <p>Owner: {{ event.owner }}</p>
       
-      <b><a  href="{% url 'event_detail'  event.pk  %}">details</a></b>
-      <b><a  href="{% url 'event_update'  event.pk  %}">edit</a></b>
-      <b><a  href="{% url 'event_delete'  event.pk  %}">delete</a></b>
-      <hr>
+      <ul class="action_event_menu horizontal">
+        <li class="action_event_menu_item"><b><a href="{% url 'event_detail'  event.pk  %}">details</a></b></li>
+        <li class="action_event_menu_item"><b><a href="{% url 'event_update'  event.pk  %}">edit</a></b></li>
+        <li class="action_event_menu_item"><b><a href="{% url 'event_delete'  event.pk  %}">delete</a></b></li>
+      </ul>
     </div>
   {% endfor %}
 {% endblock content %}

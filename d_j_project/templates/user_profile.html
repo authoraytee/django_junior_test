@@ -8,11 +8,14 @@
     <p>Group: {{ user.groups.all }}</p>
 
 
-    <h4>Your events:</h4>
+    <h4>Your events and subscribers:</h4>
     <ol>
-    {% for event in events %}
-        <li><a  href="{% url 'event_detail'  event.pk  %}">{{ event.EventName }}</a></li> 
-    {% endfor %}
+        {% for event_subscriber in events_to_subscribers %}
+            {% if event_subscriber.event == 1 %}
+                <li>{{ event_subscriber.subscriber }} -----
+                {{ event_subscriber.event }}</li>
+            {% endif %}
+        {% endfor %}
     </ol>
 
 {% endblock content %}

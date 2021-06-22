@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from .models import Event
 from .serializers import EventsSerializer
+from urllib import request
 
 
 class EventViewSet(ModelViewSet):
@@ -86,4 +87,6 @@ class EventDelete(LoginRequiredMixin, DeleteView):
         success_url = self.get_success_url()
         self.object.delete()
         return HttpResponseRedirect(success_url)
+
+
 

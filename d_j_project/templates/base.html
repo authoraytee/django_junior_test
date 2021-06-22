@@ -2,16 +2,28 @@
 
 <html>
   <head>
-    <title>Django test</title>
+    <title>django junior test</title>
+    <link href="{% static 'css/normalize.css' %}" rel="stylesheet">
+    <link href="{% static 'css/my_config.css' %}" rel="stylesheet">
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
   </head>
   <body>
-    <header>
-      <h1><a href="{% url 'home' %}">Django test</a></h1>
-    </header>
-    <div>
-      {% block content %}
-      {% endblock content %}
+      <header>
+        <div class="wrapper">
+          <h1><a href="{% url 'home' %}">django junior test</a></h1>
+            {% if user.is_authenticated %}
+              <p>Hi <a href="{% url 'user_profile' %}">{{ user.username }}</a>!</p>
+              <a class="login_link" href="{% url 'logout' %}">Log out</a>
+            {% else %}
+              <a class="login_link" href="{% url 'login' %}">Log In</a>
+            {% endif %}
+        </div>
+      </header>
+      <section class="main">
+        <div class="wrapper">
+          {% block content %}
+          {% endblock content %}
+        </div>
     </div>
   </body>
 </html>

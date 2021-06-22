@@ -1,47 +1,89 @@
-body {
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: 18px;
-  }
-   
-  header {
-    border-bottom: 1px solid #999;
-    margin-bottom: 2rem;
-    display: flex;
-  }
-   
-  header h1 a {
-    color: red;
-    text-decoration: none;
-  }
-   
-  .nav-left {
-    margin-right: auto;
-  }
-   
-  .nav-right {
-    display: flex;
-    padding-top: 2rem;
-  }
-   
-  .post-entry {
-    margin-bottom: 2rem;
-  }
-   
-  .post-entry h2 {
-    margin: 0.5rem 0;
-  }
-   
-  .post-entry h2 a,
-  .post-entry h2 a:visited {
-    color: blue;
-    text-decoration: none;
-  }
-   
-  .post-entry p {
-    margin: 0;
-    font-weight: 400;
-  }
-   
-  .post-entry h2 a:hover {
-    color: red;
-  }
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.wrapper{
+  width: 1000px;
+}
+
+header{
+  width: 100%;
+  padding: 0;
+  background-color: rgb(241, 241, 241);
+  border-bottom: 1px solid rgb(163, 163, 163);
+}
+
+header > .wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 25px 0 25px 0;
+}
+
+a.login_link{
+  margin-top: 25px;
+  margin-right: 375px;
+  justify-self: start;
+  align-self: end;
+  font-size: 15px;
+}
+
+section.main{
+  padding: 0;
+}
+
+section.main > .wrapper{
+  background-color: rgb(233, 233, 233);
+  padding-top: 25px;
+  padding-left: 100px;
+}
+
+a.new_event_link{
+  font-size: 20px;
+}
+
+ul.action_event_menu{
+  justify-content: start;
+  margin-bottom: 50px;
+}
+
+ul.action_event_menu > li{
+  margin: 0;
+  margin-right: 15px;
+}
+
+span.id{
+  font-size: 15px;
+}
+
+h3.event_name{
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+
+div.event_form_main{ 
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  padding-left: 100px;
+}
+
+form.event_form_form{
+  display: flex;
+  flex-direction: row;
+}
+
+button.event_form_submit{
+  font-size: 17px;
+  padding: 10px 20px 10px 20px;
+  margin-left: 25px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 2px;
+  border: 1px solid rgb(180, 180, 180);
+}

@@ -1,19 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Log In</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Log In</button>
-</form>
-
-{% if user.is_authenticated %}
-<p>Hi {{ user.username }}!</p>
-<p>Your group is {{ user.groups.all }}</p>
-<p><a href="{% url 'logout' %}">Log out</a></p>
-{% else %}
-<p>You are not logged in.</p>
-<a href="{% url 'login' %}">Log In</a>
-{% endif %}
+<div class="event_form_main">
+  <div>
+      <h3>Log In</h3>
+  </div>
+  <div>
+      <form class="event_form_form" method="post">
+          <div>
+              {% csrf_token %}
+              {{form.as_p}}
+          </div>
+          <button type="submit" class="event_form_submit">Log In</button>
+      </form>
+  </div>
+</div>
 {% endblock content %}

@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Model
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
+
 import datetime
 
 class Event(Model):
@@ -13,3 +14,12 @@ class Event(Model):
     def __str__(self):
         return self.EventName
         
+
+class EventToSubscriber(Model):
+    event = models.ForeignKey(Event, on_delete = models.CASCADE, verbose_name='Событие', blank = True, null = True )
+    subscriber = models.ForeignKey(User, on_delete = models.DO_NOTHING, verbose_name='Подписчик', blank = True, null = True )
+
+
+
+
+
