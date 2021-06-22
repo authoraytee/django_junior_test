@@ -4,28 +4,21 @@
 {% block content %}
 
   {% if user.is_authenticated %}
-    <p>Hi {{ user.username }}!</p>
-    <p>Your group is {{ user.groups.all }}</p>
+    <p>Hi <a href="{% url 'user_profile' %}">{{ user.username }}</a>!</p>
     <p><a href="{% url 'logout' %}">Log out</a></p>
   {% else %}
     <p>You are not logged in.</p>
     <a href="{% url 'login' %}">Log In</a>
   {% endif %}
 
+  <a href="{% url 'event_create'%}">Create new event</a>
 
   {% for event in object_list %}
     <div class="post-entry">
-      <h2><a href="{% url 'event_detail' event.pk %}">{{ event.EventName }}</a></h2>
+      <h2>{{ event.id }} <a href="{% url 'event_detail' event.pk %}">{{ event.EventName }}</a></h2>
       <p>{{ event.PublicationDate }}</p>
       <p>{{ event.EventDate }}</p>
-
-      {% if user.is_authenticated %}
-        <p>Hi {{ user.username }}!</p>
-        <p><a href="{% url 'logout' %}">Log out</a></p>
-      {% else %}
-        <p>You are not logged in.</p>
-        <a href="{% url 'login' %}">Log In</a>
-      {% endif %}
+      <p>Owner: {{ event.owner }}</p>
       
       <b><a  href="{% url 'event_detail'  event.pk  %}">details</a></b>
       <b><a  href="{% url 'event_update'  event.pk  %}">edit</a></b>
@@ -33,5 +26,4 @@
       <hr>
     </div>
   {% endfor %}
-  <a href="{% url 'event_create'%}">Create new event</a>
 {% endblock content %}

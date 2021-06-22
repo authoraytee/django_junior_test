@@ -1,4 +1,4 @@
-from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 from rest_framework.permissions import IsAuthenticated
@@ -11,46 +11,15 @@ from .models import Event
 from .serializers import EventsSerializer
 
 
-# class UserAccessMixin(PermissionRequiredMixin):
-#     def dispatch(self, request, *args, **kwargs):
-#         if (not self.request.user.is_authenticated):
-#             return redirect_to_login(self.request.get_full_path(),
-#             self.get_login_url(), self.get_redirect_field_name())
-#         if (not self.has_permission()):
-#             return redirect("/")
-#         return super(UserAccessMixin, self).dispatch(request, *args, **kwargs)
-
-# class PostUserWritePermission(BasePermission):
-#     def has_object_permission(self, request, view, obj):
-#         if request.method in SAFE_METHODS:
-#             return True
-#         return obj.owner == request.user
-
-
-
-
-
-# from django.shortcuts import render
- 
-# def index(request):
-#     queryset = Event.objects.all()
-#     return render(request, "home.html", queryset)
-
-
-
-
-
-
 class EventViewSet(ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventsSerializer
     permission_classes = [IsAuthenticated]
 
-    #template_name = 'home.html'
 
-    # def perform_create(self, serializer):
-    #     serializer.validated_data["owner"] = self.request.user
-    #     serializer.save()
+class EventListView(ListView):
+    model = Event
+    template_name = "home.html"
 
 
 class EventDetail(DetailView):
@@ -62,7 +31,7 @@ class EventDetail(DetailView):
 
 class EventCreate(PermissionRequiredMixin, CreateView):
     permission_classes = [IsAuthenticated]
-    permission_required = 'app.create_event'
+    permission_required = 'app.add_event'
     permission_denied_message = ""
 
     model = Event
@@ -85,9 +54,9 @@ class EventUpdate(PermissionRequiredMixin, UpdateView):
 
     template_name = 'event_update.html'
     context_object_name = 'event'
-    fields = ('EventName', 'PublicationDate', 'EventDate',)
+    fields = ('EventName', 'EventDate',)
 
-    success_url = reverse_lazy('edit_page')
+    success_url = reverse_lazy('home')
     success_msg = 'Запись успешно обновлена'
 
     def get_context_data(self,**kwargs):
@@ -109,7 +78,6 @@ class EventDelete(LoginRequiredMixin, DeleteView):
 
     template_name = 'event_confirm_delete.html'
     success_url = reverse_lazy('home')
-
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
