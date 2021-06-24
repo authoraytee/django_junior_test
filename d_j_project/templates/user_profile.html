@@ -3,19 +3,32 @@
 {% block content %}
     <h2>Your account</h2>
     <p>Hello, {{ user.username }}</p>
-    <p>First name: {{ user.first_name }}</p>
-    <p>Last Name: {{ user.last_name }}</p>
-    <p>Group: {{ user.groups.all }}</p>
 
 
-    <h4>Your events and subscribers:</h4>
-    <ol>
+    <h3>Your events and subscribers:</h3>
+    <br>
+
         {% for event_subscriber in events_to_subscribers %}
-            {% if event_subscriber.event == 1 %}
-                <li>{{ event_subscriber.subscriber }} -----
-                {{ event_subscriber.event }}</li>
-            {% endif %}
-        {% endfor %}
-    </ol>
+            {% for event in event_subscriber.event.all %}
+                {% if event.owner == current_user %}
 
+                    <!-- Событие -->
+                    <p>Event: {{ event.EventName }}</p>
+                    <!-- Подписчик -->
+                    <p>
+                        Subscriber: 
+                        {% for subscriber in event_subscriber.subscriber.all %}
+                            {{ subscriber }}
+                        {% endfor %}  
+                    </p>
+                    <!-- Дата подписки  -->
+                    <p>
+                        Subscription Date:
+                        {{ event_subscriber.SubscriptionDate }}
+                    </p>
+                    
+                    <hr>
+                {% endif %}
+            {% endfor %}   
+        {% endfor %}
 {% endblock content %}

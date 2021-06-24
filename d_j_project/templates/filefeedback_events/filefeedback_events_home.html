@@ -11,16 +11,16 @@
 
   {% for event in object_list %}
     <div class="post-entry">
-      <h3 class="event_name"><a href="{% url 'event_detail' event.pk %}">{{ event.EventName }}</a></h3>
+      <h3 class="event_name"><a href="{% url 'filefeedback_event_detail'  event.pk  %}">{{ event.EventName }}</a></h3>
       <span class="id">ID: {{ event.id }}</span>
       <p>Publication Date: {{ event.PublicationDate }}</p>
       <p>Event Date: {{ event.EventDate }}</p>
       <p>Owner: {{ event.owner }}</p>
       
       <ul class="action_event_menu horizontal">
-        <li class="action_event_menu_item"><b><a href="{% url 'event_detail'  event.pk  %}">details</a></b></li>
-        <li class="action_event_menu_item"><b><a href="{% url 'event_update'  event.pk  %}">edit</a></b></li>
-        <li class="action_event_menu_item"><b><a href="{% url 'event_delete'  event.pk  %}">delete</a></b></li>
+        <li class="action_event_menu_item"><b><a href="{% url 'filefeedback_event_detail'  event.pk  %}">details</a></b></li>
+        <li class="action_event_menu_item"><b><a href="{% url 'filefeedback_event_update'  event.pk  %}">edit</a></b></li>
+        <li class="action_event_menu_item"><b><a href="{% url 'filefeedback_event_delete'  event.pk  %}">delete</a></b></li>
       </ul>
     </div>
   {% endfor %}

@@ -18,10 +18,14 @@ class UserProfile(PermissionRequiredMixin, ListView):
     permission_required = 'app.view_event'    
     model = User
     template_name = "user_profile.html"
+    
 
     def get_context_data(self, **kwargs):
         context = super(UserProfile, self).get_context_data(**kwargs)
         context['events_to_subscribers'] = EventToSubscriber.objects.all()
+
+        #self.owner = self.request.user
+        context['current_user'] = self.request.user
         return context
 
 

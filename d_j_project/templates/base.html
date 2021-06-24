@@ -16,7 +16,13 @@
               <a class="login_link" href="{% url 'logout' %}">Log out</a>
             {% else %}
               <a class="login_link" href="{% url 'login' %}">Log In</a>
+              <a class="login_link" href="{% url 'signup' %}">Sign Up</a>
             {% endif %}
+
+            <div>
+              <p><a href="{% url 'home' %}">Simple Events</a></p>
+              <p><a href="{% url 'filefeedback_events_home' %}">File Feedback Events</a></p>
+            </div>
         </div>
       </header>
       <section class="main">

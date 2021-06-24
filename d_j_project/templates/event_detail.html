@@ -6,11 +6,17 @@
     <h2>{{ event.EventName }}</h2>
     <p>{{ event.PublicationDate }}</p>
     <p>{{ event.EventDate }}</p>
+    <p>{{ event.owner }}</p>
+    <p>{{ event.owner.email }}</p>
   </div>
 
-  <form method="POST">
 
-    <button type="submit">Subscribe</button>
-  </form>
-    
+
+
+  {% if request.user.is_authenticated %}
+    <a href="{% url 'event_subscribe'  event.pk  %}">Подписаться</a>
+  {% endif %}
+
+  <br>
+  <br>
 {% endblock content %}

@@ -21,7 +21,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'social_django',
     'accounts',
-    'app'
+    'app',
+    'feedbackfile_app'
 ]
 
 MIDDLEWARE = [
@@ -116,3 +117,14 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
 SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+
+
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 2525
+EMAIL_HOST_USER = "django_junior_bot_222@mail.ru"
+EMAIL_HOST_PASSWORD = "password1122"
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

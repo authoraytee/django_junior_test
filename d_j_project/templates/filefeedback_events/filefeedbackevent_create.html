@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="event_form_main">
+    <div>
+        <h3>Create a New File Feedback Event</h3>
+    </div>
+    <div>
+        <form class="event_form_form" method="post">
+            <div>
+                {% csrf_token %}
+                {{form.as_p}}
+            </div>
+            <button type="submit" class="event_form_submit">Create</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

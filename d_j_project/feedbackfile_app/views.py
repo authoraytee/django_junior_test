@@ -1,8 +1,13 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Event, EventToSubscriber
+from .models import FileFeedbackEvent, FileFeedbackEventToSubscriber
+from .serializers import EventsSerializer
+from .models import FileFeedbackEventToSubscriber
+from .forms import FileFieldForm, FeedbackForm
 from django.urls import reverse_lazy
 
 from django.http import HttpResponseRedirect, HttpResponse
+
+from rest_framework.viewsets import ModelViewSet
 
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -12,38 +17,34 @@ from django.conf import settings
 from django.core.mail import send_mail
 
 
-# Список всех событий
-class EventListView(ListView):
-    model = Event
-    template_name = "home.html"
+
+class FileFeedbackEventListView(ListView):
+    model = FileFeedbackEvent
+    template_name = "filefeedback_events/filefeedback_events_home.html"
 
 
-# Конкретное событие
-class EventDetail(DetailView):
+class FileFeedbackEventDetail(DetailView):
     permission_classes = [IsAuthenticated]
 
-    model = Event
-    template_name = 'event_detail.html'
+    model = FileFeedbackEvent
+    template_name = 'filefeedback_events/filefeedback_event_detail.html'
 
     def get_context_data(self, **kwargs):
-        context = super(EventDetail, self).get_context_data(**kwargs)
-        context['events_to_subscribers'] = EventToSubscriber.objects.all()
+        context = super(FileFeedbackEventDetail, self).get_context_data(**kwargs)
+        context['events_to_subscribers'] = FileFeedbackEventToSubscriber.objects.all()
         context['current_user'] = self.request.user
-
         return context
 
 
-
-# Создание нового события
-class EventCreate(PermissionRequiredMixin, CreateView):
+class FileFeedbackEventCreate(PermissionRequiredMixin, CreateView):
     permission_classes = [IsAuthenticated]
     permission_required = 'app.add_event'
     permission_denied_message = ""
 
-    model = Event
-    template_name = 'event_create.html'
+    model = FileFeedbackEvent
+    template_name = 'filefeedback_events/filefeedbackevent_create.html'
     fields = ('EventName', 'EventDate',)
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('filefeedback_events_home')
 
     def form_valid(self,form):
         self.object = form.save(commit=False)
@@ -52,18 +53,17 @@ class EventCreate(PermissionRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-# Редактирование события
-class EventUpdate(PermissionRequiredMixin, UpdateView):
-    model = Event
+class FileFeedbackEventUpdate(PermissionRequiredMixin, UpdateView):
+    model = FileFeedbackEvent
     permission_classes = [IsAuthenticated]
     permission_required = 'app.change_event'
     permission_denied_message = ""
 
-    template_name = 'event_update.html'
+    template_name = 'filefeedback_events/filefeedback_event_update.html'
     context_object_name = 'event'
     fields = ('EventName', 'EventDate',)
 
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('filefeedback_events_home')
     success_msg = 'Запись успешно обновлена'
 
     def get_context_data(self,**kwargs):
@@ -77,15 +77,14 @@ class EventUpdate(PermissionRequiredMixin, UpdateView):
         return kwargs
 
 
-# Удаление события
-class EventDelete(LoginRequiredMixin, DeleteView):
-    model = Event
+class FileFeedbackEventDelete(LoginRequiredMixin, DeleteView):
+    model = FileFeedbackEvent
     permission_classes = [IsAuthenticated]
     permission_required = 'app.delete_event'
     permission_denied_message = ""
 
-    template_name = 'event_confirm_delete.html'
-    success_url = reverse_lazy('home')
+    template_name = 'filefeedback_events/filefeedback_event_confirm_delete.html'
+    success_url = reverse_lazy('filefeedback_events_home')
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -96,19 +95,34 @@ class EventDelete(LoginRequiredMixin, DeleteView):
         return HttpResponseRedirect(success_url)
 
 
-# Функция подписки 
+#Отправкеа файла
+class SendFileFeedback(CreateView): # новый
+    model = FileFeedbackEventToSubscriber
+    form_class = FileFieldForm
+    template_name = 'send_feedback_file.html'
+    success_url = reverse_lazy('filefeedback_events_home')
+
+# Отправка фидбека
+class SendFeedback(CreateView):
+    model = FileFeedbackEventToSubscriber
+    form_class = FeedbackForm
+    template_name = 'send_feedback.html'
+    success_url = reverse_lazy('filefeedback_events_home')
+
+# Подписка
 def EventSubscribe(request, event):
     current_user = request.user
     event_id = event
-    current_event = Event.objects.get(pk=event_id)
+    current_event = FileFeedbackEvent.objects.get(pk=event_id)
     current_event_creator_email = current_event.owner.email
 
-    output = "Спасибо за подписку!<br> <h3><a href='/event/{0}'>Обратно</a></h3>".format(event_id)
-
-    new_subscriber = EventToSubscriber.objects.create()
+    new_subscriber = FileFeedbackEventToSubscriber.objects.create()
     new_subscriber.event.add(event_id)
     new_subscriber.subscriber.add(current_user)
 
     send_mail('На ваше событие подписались', 'Поздравляем! На ваше событие подписался {0}!'.format(current_user), settings.EMAIL_HOST_USER, [current_event_creator_email])
     
+    output = "Спасибо за подписку!<br> <h3><a href='/feedbackfile_app/filefeedback_event/{0}'>Обратно</a></h3>".format(event_id)
+    
     return HttpResponse(output)
+
