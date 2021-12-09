@@ -23,7 +23,7 @@ class EventDetail(DetailView):
     permission_classes = [IsAuthenticated]
 
     model = Event
-    template_name = 'event_detail.html'
+    template_name = 'events/event_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super(EventDetail, self).get_context_data(**kwargs)
@@ -41,7 +41,7 @@ class EventCreate(PermissionRequiredMixin, CreateView):
     permission_denied_message = ""
 
     model = Event
-    template_name = 'event_create.html'
+    template_name = 'events/event_create.html'
     fields = ('EventName', 'EventDate',)
     success_url = reverse_lazy('home')
 
@@ -59,7 +59,7 @@ class EventUpdate(PermissionRequiredMixin, UpdateView):
     permission_required = 'app.change_event'
     permission_denied_message = ""
 
-    template_name = 'event_update.html'
+    template_name = 'events/event_update.html'
     context_object_name = 'event'
     fields = ('EventName', 'EventDate',)
 
@@ -84,7 +84,7 @@ class EventDelete(LoginRequiredMixin, DeleteView):
     permission_required = 'app.delete_event'
     permission_denied_message = ""
 
-    template_name = 'event_confirm_delete.html'
+    template_name = 'events/event_confirm_delete.html'
     success_url = reverse_lazy('home')
 
     def delete(self, request, *args, **kwargs):

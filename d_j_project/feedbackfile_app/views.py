@@ -20,14 +20,14 @@ from django.core.mail import send_mail
 
 class FileFeedbackEventListView(ListView):
     model = FileFeedbackEvent
-    template_name = "filefeedback_events/filefeedback_events_home.html"
+    template_name = "feedback/filefeedback_events_home.html"
 
 
 class FileFeedbackEventDetail(DetailView):
     permission_classes = [IsAuthenticated]
 
     model = FileFeedbackEvent
-    template_name = 'filefeedback_events/filefeedback_event_detail.html'
+    template_name = 'feedback/filefeedback_event_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super(FileFeedbackEventDetail, self).get_context_data(**kwargs)
@@ -42,7 +42,7 @@ class FileFeedbackEventCreate(PermissionRequiredMixin, CreateView):
     permission_denied_message = ""
 
     model = FileFeedbackEvent
-    template_name = 'filefeedback_events/filefeedbackevent_create.html'
+    template_name = 'feedback/filefeedbackevent_create.html'
     fields = ('EventName', 'EventDate',)
     success_url = reverse_lazy('filefeedback_events_home')
 
@@ -59,7 +59,7 @@ class FileFeedbackEventUpdate(PermissionRequiredMixin, UpdateView):
     permission_required = 'app.change_event'
     permission_denied_message = ""
 
-    template_name = 'filefeedback_events/filefeedback_event_update.html'
+    template_name = 'feedback/filefeedback_event_update.html'
     context_object_name = 'event'
     fields = ('EventName', 'EventDate',)
 
@@ -83,7 +83,7 @@ class FileFeedbackEventDelete(LoginRequiredMixin, DeleteView):
     permission_required = 'app.delete_event'
     permission_denied_message = ""
 
-    template_name = 'filefeedback_events/filefeedback_event_confirm_delete.html'
+    template_name = 'feedback/filefeedback_event_confirm_delete.html'
     success_url = reverse_lazy('filefeedback_events_home')
 
     def delete(self, request, *args, **kwargs):
@@ -99,15 +99,15 @@ class FileFeedbackEventDelete(LoginRequiredMixin, DeleteView):
 class SendFileFeedback(CreateView): # новый
     model = FileFeedbackEventToSubscriber
     form_class = FileFieldForm
-    template_name = 'send_feedback_file.html'
-    success_url = reverse_lazy('filefeedback_events_home')
+    template_name = 'feedback/send_feedback_file.html'
+    success_url = reverse_lazy('feedback/filefeedback_events_home')
 
 # Отправка фидбека
 class SendFeedback(CreateView):
     model = FileFeedbackEventToSubscriber
     form_class = FeedbackForm
-    template_name = 'send_feedback.html'
-    success_url = reverse_lazy('filefeedback_events_home')
+    template_name = 'feedback/send_feedback.html'
+    success_url = reverse_lazy('feedback/filefeedback_events_home')
 
 # Подписка
 def EventSubscribe(request, event):
